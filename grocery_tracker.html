@@ -8,55 +8,150 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
         
-        body { font-family: 'Inter', system_ui, sans-serif; background: #18181b; color: #f4f4f5; }
+        body { 
+            font-family: 'Inter', system_ui, sans-serif; 
+            background: #18181b; 
+            color: #f4f4f5; 
+        }
         .title-font { font-family: 'Space Grotesk', sans-serif; }
-        .receipt-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .receipt-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
-        .scroll-container { max-height: 420px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #4b5563 #27272a; }
         .category-card { transition: all 0.2s ease; }
         .category-header { cursor: pointer; }
         .expand-icon { transition: transform 0.3s ease; }
         .expanded .expand-icon { transform: rotate(180deg); }
         .category-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
-        .expanded .category-details { max-height: 800px; }
+        .expanded .category-details { max-height: 1000px; }
     </style>
 </head>
-<body class="min-h-screen">
-    <div class="max-w-6xl mx-auto p-8">
-        <div class="flex justify-between mb-10">
+<body class="min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-start mb-10">
             <div>
-                <h1 class="title-font text-5xl font-semibold tracking-tighter text-emerald-400">Grocery Tracker</h1>
+                <h1 class="title-font text-5xl font-semibold text-emerald-400">Grocery Tracker</h1>
                 <p class="text-zinc-400">June 2026 • Lidl Garwood, NJ</p>
             </div>
             <div class="text-right">
-                <div class="text-6xl font-semibold text-white" id="total">$87.18</div>
-                <p class="text-emerald-400 text-sm font-medium">MONTHLY TOTAL</p>
+                <div class="text-6xl font-bold text-white">$87.18</div>
+                <p class="text-emerald-400">MONTHLY TOTAL</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- Breakdown -->
-            <div class="lg:col-span-7 bg-zinc-900 rounded-3xl p-8">
-                <h2 class="text-2xl font-semibold mb-8">📊 Spending Breakdown</h2>
-                <div class="mb-8" style="height: 320px;">
-                    <canvas id="categoryChart"></canvas>
-                </div>
-                <div id="categories" class="space-y-4"></div>
+        <!-- Chart -->
+        <div class="bg-zinc-900 rounded-3xl p-8 mb-8">
+            <h2 class="text-2xl font-semibold mb-6">📊 Spending Breakdown</h2>
+            <div style="height: 340px;">
+                <canvas id="categoryChart"></canvas>
             </div>
+        </div>
 
-            <!-- Receipts -->
-            <div class="lg:col-span-5 bg-zinc-900 rounded-3xl p-8">
-                <h2 class="text-2xl font-semibold mb-6">Recent Receipts</h2>
-                <div class="scroll-container space-y-6">
-                    <!-- June 2 and June 3 cards here (same as before) -->
+        <!-- Categories -->
+        <div class="space-y-4" id="categories"></div>
+
+        <!-- Recent Receipts -->
+        <div class="mt-12 bg-zinc-900 rounded-3xl p-8">
+            <h2 class="text-2xl font-semibold mb-6">Recent Receipts</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-zinc-800 rounded-2xl p-6">
+                    <div class="font-semibold">June 2, 2026</div>
+                    <div class="text-emerald-400 text-3xl font-bold mt-2">$72.68</div>
+                    <div class="text-zinc-400 text-sm">17 items</div>
+                </div>
+                <div class="bg-zinc-800 rounded-2xl p-6">
+                    <div class="font-semibold">June 3, 2026</div>
+                    <div class="text-emerald-400 text-3xl font-bold mt-2">$14.50</div>
+                    <div class="text-zinc-400 text-sm">4 items</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // (Full script with categories and chart - same as previous version)
-        // ... [I can send the full script if you want, but the one I sent last time works great]
+        const categories = [
+            { name: "Meat & Seafood", color: "#10b981", amount: 40.44, items: [
+                {name: "Grassfed Strip Steak", qty: "2 @ $8.99", price: 17.98},
+                {name: "BAP Chilean Salmon", qty: "1.04 lb", price: 9.87},
+                {name: "Chicken Thighs", qty: "4.26 lb @ $1.55/lb", price: 6.60},
+                {name: "Smoked Salmon", qty: "", price: 5.99}
+            ]},
+            { name: "Produce", color: "#eab308", amount: 18.08, items: [
+                {name: "Bananas", qty: "2.64 lb", price: 1.29},
+                {name: "Baby Spring Mix", qty: "", price: 2.99},
+                {name: "Vine Tomatoes", qty: "1.15 lb", price: 2.29},
+                {name: "Yuca Roots", qty: "1.43 lb", price: 2.85},
+                {name: "Mangos Ataulfo", qty: "3 @ $0.79", price: 2.37}
+            ]},
+            { name: "Pantry & Sauces", color: "#3b82f6", amount: 14.84, items: [
+                {name: "Rao's Sauce", qty: "", price: 6.98},
+                {name: "Diced Tomatoes", qty: "4 cans", price: 3.84},
+                {name: "Mexican Pollo Sauce", qty: "", price: 2.23},
+                {name: "Black Olives", qty: "", price: 1.79}
+            ]},
+            { name: "Dairy & Snacks", color: "#a855f7", amount: 13.82, items: [
+                {name: "Brown Eggs", qty: "18 count", price: 4.25},
+                {name: "Plain Fajitas", qty: "", price: 9.99},
+                {name: "Cinnam. Cookies", qty: "", price: 2.49},
+                {name: "Plantain Chips", qty: "", price: 2.29}
+            ]}
+        ];
+
+        function renderCategories() {
+            const container = document.getElementById('categories');
+            container.innerHTML = categories.map(cat => `
+                <div class="category-card bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-700">
+                    <div class="category-header p-6 flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <div class="w-5 h-5 rounded-full" style="background-color: ${cat.color}"></div>
+                            <div class="font-semibold text-xl">${cat.name}</div>
+                        </div>
+                        <div class="flex items-center gap-8">
+                            <div class="text-3xl font-bold">$${cat.amount}</div>
+                            <span class="expand-icon text-3xl text-zinc-400">▼</span>
+                        </div>
+                    </div>
+                    <div class="category-details px-6 pb-6 text-zinc-300">
+                        ${cat.items.map(item => `
+                            <div class="flex justify-between py-3 border-t border-zinc-800">
+                                <div>
+                                    <div class="font-medium">${item.name}</div>
+                                    ${item.qty ? `<div class="text-sm text-zinc-500">${item.qty}</div>` : ''}
+                                </div>
+                                <div class="font-mono">$${item.price.toFixed(2)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Click to expand
+            document.querySelectorAll('.category-header').forEach(header => {
+                header.addEventListener('click', () => header.parentElement.classList.toggle('expanded'));
+            });
+        }
+
+        // Initialize everything
+        window.onload = () => {
+            renderCategories();
+
+            new Chart(document.getElementById('categoryChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: categories.map(c => c.name),
+                    datasets: [{
+                        data: categories.map(c => c.amount),
+                        backgroundColor: categories.map(c => c.color),
+                        borderWidth: 5,
+                        borderColor: '#18181b'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: "65%",
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#d1d5db', font: { size: 15 }, padding: 20 } }
+                    }
+                }
+            });
+        };
     </script>
 </body>
 </html>
