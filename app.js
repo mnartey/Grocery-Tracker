@@ -1,5 +1,4 @@
 let entries = JSON.parse(localStorage.getItem('groceryEntries')) || [
-    // Your previous entries from our chat
     { item: "Organic Chicken Breast", price: 12.99, category: "Proteins", date: "2026-06-02" },
     { item: "Baby Spinach & Lettuce Mix", price: 4.49, category: "Produce", date: "2026-06-02" },
     { item: "Greek Yogurt (Plain)", price: 5.99, category: "Dairy", date: "2026-06-02" },
@@ -19,8 +18,8 @@ function renderEntries() {
     list.innerHTML = '';
     let total = 0;
 
-    entries.forEach((entry, index) => {
-        total += parseFloat(entry.price);
+    entries.forEach(entry => {
+        total += entry.price;
         const li = document.createElement('li');
         li.innerHTML = `
             <div>
@@ -32,9 +31,7 @@ function renderEntries() {
         list.appendChild(li);
     });
 
-    document.getElementById('summary').textContent = 
-        `Total This Month: $${total.toFixed(2)} | Budget: $400`;
-    
+    document.getElementById('summary').textContent = `Total This Month: $${total.toFixed(2)} | Budget: $400`;
     drawPieChart();
 }
 
@@ -44,12 +41,7 @@ function addEntry() {
     const category = document.getElementById('category').value;
 
     if (item && price > 0) {
-        entries.unshift({ 
-            item, 
-            price, 
-            category, 
-            date: new Date().toISOString().slice(0,10) 
-        });
+        entries.unshift({ item, price, category, date: new Date().toISOString().slice(0,10) });
         localStorage.setItem('groceryEntries', JSON.stringify(entries));
         renderEntries();
         document.getElementById('item').value = '';
@@ -62,30 +54,30 @@ function drawPieChart() {
     const ctx = document.getElementById('pieChart');
     const categoryTotals = {};
 
-    entries.forEach(entry => {
-        categoryTotals[entry.category] = (categoryTotals[entry.category] || 0) + entry.price;
+    entries.forEach(e => {
+        categoryTotals[e.category] = (categoryTotals[e.category] || 0) + e.price;
     });
-
-    const labels = Object.keys(categoryTotals);
-    const data = Object.values(categoryTotals);
 
     if (pieChart) pieChart.destroy();
 
     pieChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: labels,
+            labels: Object.keys(categoryTotals),
             datasets: [{
-                data: data,
-                backgroundColor: ['#4a7043', '#6b8e5f', '#a8c4a0', '#d4e4cc', '#f4a261', '#e76f51', '#2a9d8f']
+                data: Object.values(categoryTotals),
+                backgroundColor: ['#4a7043', '#6b8e5f', '#a8c4a0', '#d4e4cc', '#f4a261', '#e76f51', '#2a9d8f', '#f1c453']
             }]
         },
-        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'bottom', labels: { padding: 20, font: { size: 14 } } } }
+        }
     });
 }
 
 function clearData() {
-    if (confirm('Clear ALL data and start fresh?')) {
+    if (confirm('Clear all data?')) {
         entries = [];
         localStorage.clear();
         renderEntries();
