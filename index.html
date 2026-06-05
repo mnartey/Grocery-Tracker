@@ -6,30 +6,31 @@
     <title>Grocery Tracker</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4CAF50">
+    <meta name="theme-color" content="#4a7043">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <header>
         <h1>🛒 Grocery Tracker</h1>
-        <div id="summary">Monthly Total: $0.00 | Budget: $400</div>
+        <div id="summary">Total This Month: $0.00 | Budget: $400</div>
     </header>
 
     <main>
         <section id="add-entry">
-            <h2>Add Purchase</h2>
-            <input type="text" id="item" placeholder="Item (e.g. Chicken Breast)">
-            <input type="number" id="price" placeholder="Price" step="0.01">
+            <h2>Add New Purchase</h2>
+            <input type="text" id="item" placeholder="Item name">
+            <input type="number" id="price" placeholder="Price $" step="0.01">
             <select id="category">
                 <option value="Produce">Produce</option>
-                <option value="Dairy">Dairy/Eggs</option>
+                <option value="Dairy">Dairy & Eggs</option>
                 <option value="Proteins">Proteins</option>
-                <option value="Pantry">Pantry Staples</option>
+                <option value="Pantry">Pantry</option>
                 <option value="Snacks">Snacks</option>
                 <option value="Beverages">Beverages</option>
                 <option value="Household">Household</option>
                 <option value="Other">Other</option>
             </select>
-            <button onclick="addEntry()">Add Entry</button>
+            <button onclick="addEntry()">+ Add Entry</button>
         </section>
 
         <section id="entries">
@@ -38,9 +39,9 @@
         </section>
 
         <section id="stats">
-            <h2>Monthly Stats</h2>
-            <canvas id="chart" width="300" height="200"></canvas>
-            <button onclick="clearData()">Clear All Data (Reset)</button>
+            <h2>Category Breakdown</h2>
+            <canvas id="pieChart" width="300" height="300"></canvas>
+            <button onclick="clearData()">Clear All Data</button>
         </section>
     </main>
 
