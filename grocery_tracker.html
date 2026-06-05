@@ -16,12 +16,11 @@
             padding: 24px;
         }
         .title-font { font-family: 'Space Grotesk', sans-serif; }
-        .card { background: #111111; border: 1px solid #222; }
+        .card { background: #111111; border: 1px solid #222222; }
     </style>
 </head>
 <body>
     <div class="max-w-7xl mx-auto">
-        <!-- Header -->
         <div class="flex justify-between items-start mb-10">
             <div>
                 <h1 class="title-font text-5xl font-semibold text-emerald-400">Grocery Tracker</h1>
@@ -36,9 +35,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Spending Breakdown -->
             <div class="card rounded-3xl p-8">
-                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
-                    📊 Spending Breakdown
-                </h2>
+                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">📊 Spending Breakdown</h2>
+                
                 <div class="h-80 mb-8">
                     <canvas id="categoryChart"></canvas>
                 </div>
@@ -51,72 +49,52 @@
                 <h2 class="text-2xl font-semibold mb-6">Recent Receipts</h2>
                 <div class="space-y-6">
                     <div class="bg-zinc-950 rounded-2xl p-6">
-                        <div class="flex justify-between items-start">
+                        <div class="flex justify-between">
                             <div>
-                                <div class="font-semibold text-lg">June 2, 2026</div>
-                                <div class="text-zinc-400">17 items • $72.68</div>
+                                <div class="font-semibold">June 2, 2026</div>
+                                <div class="text-zinc-400 text-sm">17 items • $72.68</div>
                             </div>
                             <div class="text-emerald-400 text-3xl font-bold">$72.68</div>
                         </div>
-                        <div class="text-sm text-zinc-400 mt-3">Steak • Salmon • Rao's Sauce • Fajitas • ...</div>
+                        <div class="mt-3 text-sm text-zinc-400">Steak • Salmon • Rao's Sauce • Fajitas • ...</div>
                     </div>
                     <div class="bg-zinc-950 rounded-2xl p-6">
-                        <div class="flex justify-between items-start">
+                        <div class="flex justify-between">
                             <div>
-                                <div class="font-semibold text-lg">June 3, 2026</div>
-                                <div class="text-zinc-400">4 items • $14.50</div>
+                                <div class="font-semibold">June 3, 2026</div>
+                                <div class="text-zinc-400 text-sm">4 items • $14.50</div>
                             </div>
                             <div class="text-emerald-400 text-3xl font-bold">$14.50</div>
                         </div>
-                        <div class="text-sm text-zinc-400 mt-3">Chicken Thighs • Smoked Salmon • Mangos</div>
+                        <div class="mt-3 text-sm text-zinc-400">Chicken Thighs • Smoked Salmon • Mangos</div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Bottom Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
-            <div class="card rounded-3xl p-6 text-center">
-                <div class="text-emerald-400 text-4xl font-bold">2</div>
-                <div class="text-zinc-400 text-sm">Shopping Trips</div>
-            </div>
-            <div class="card rounded-3xl p-6 text-center">
-                <div class="text-emerald-400 text-4xl font-bold">21</div>
-                <div class="text-zinc-400 text-sm">Total Items</div>
-            </div>
-            <div class="card rounded-3xl p-6 text-center">
-                <div class="text-emerald-400 text-4xl font-bold">$43.59</div>
-                <div class="text-zinc-400 text-sm">Average per trip</div>
-            </div>
-            <div class="card rounded-3xl p-6 text-center">
-                <div class="text-emerald-400 text-4xl font-bold">46%</div>
-                <div class="text-zinc-400 text-sm">Meat/Seafood share</div>
             </div>
         </div>
     </div>
 
     <script>
         const categories = [
-            { name: "Meat & Seafood", color: "#10b981", amount: 40.44, items: [
+            { name: "Meat & Seafood", color: "#10b981", amount: 40.44, count: 4, items: [
                 {name: "Grassfed Strip Steak", qty: "2 @ $8.99", price: 17.98},
                 {name: "BAP Chilean Salmon", qty: "1.04 lb", price: 9.87},
                 {name: "Chicken Thighs", qty: "4.26 lb @ $1.55/lb", price: 6.60},
                 {name: "Smoked Salmon", qty: "", price: 5.99}
             ]},
-            { name: "Produce", color: "#eab308", amount: 18.08, items: [
+            { name: "Produce", color: "#eab308", amount: 18.08, count: 8, items: [
                 {name: "Bananas", qty: "2.64 lb", price: 1.29},
                 {name: "Baby Spring Mix", qty: "", price: 2.99},
                 {name: "Vine Tomatoes", qty: "1.15 lb", price: 2.29},
                 {name: "Yuca Roots", qty: "1.43 lb", price: 2.85},
                 {name: "Mangos Ataulfo", qty: "3 @ $0.79", price: 2.37}
             ]},
-            { name: "Pantry & Sauces", color: "#3b82f6", amount: 14.84, items: [
+            { name: "Pantry & Sauces", color: "#3b82f6", amount: 14.84, count: 4, items: [
                 {name: "Rao's Sauce", qty: "", price: 6.98},
                 {name: "Diced Tomatoes", qty: "4 cans", price: 3.84},
                 {name: "Mexican Pollo Sauce", qty: "", price: 2.23},
                 {name: "Black Olives", qty: "", price: 1.79}
             ]},
-            { name: "Dairy & Snacks", color: "#a855f7", amount: 13.82, items: [
+            { name: "Dairy & Snacks", color: "#a855f7", amount: 13.82, count: 4, items: [
                 {name: "Brown Eggs", qty: "18 count", price: 4.25},
                 {name: "Plain Fajitas", qty: "", price: 9.99},
                 {name: "Cinnam. Cookies", qty: "", price: 2.49},
@@ -127,75 +105,4 @@
         function renderCategories() {
             const container = document.getElementById('categories');
             container.innerHTML = categories.map(cat => `
-                <div class="category-card bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <div class="category-header p-5 flex justify-between items-center cursor-pointer">
-                        <div class="flex items-center gap-4">
-                            <div class="w-4 h-4 rounded-full" style="background-color: ${cat.color}"></div>
-                            <div>
-                                <div class="font-medium">${cat.name}</div>
-                                <div class="text-xs text-zinc-500">${cat.items.length} items</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-6">
-                            <div class="text-2xl font-bold">$${cat.amount}</div>
-                            <span class="expand-icon text-2xl text-zinc-400">▼</span>
-                        </div>
-                    </div>
-                    <div class="category-details px-5 pb-5 hidden">
-                        ${cat.items.map(item => `
-                            <div class="flex justify-between py-3 border-t border-zinc-800">
-                                <div>
-                                    <div class="font-medium">${item.name}</div>
-                                    ${item.qty ? `<div class="text-xs text-zinc-500">${item.qty}</div>` : ''}
-                                </div>
-                                <div class="font-mono">$${item.price.toFixed(2)}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.category-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const details = header.nextElementSibling;
-                    details.classList.toggle('hidden');
-                    const icon = header.querySelector('.expand-icon');
-                    icon.style.transform = details.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-                });
-            });
-        }
-
-        window.onload = () => {
-            renderCategories();
-
-            new Chart(document.getElementById('categoryChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: categories.map(c => c.name),
-                    datasets: [{
-                        data: categories.map(c => c.amount),
-                        backgroundColor: categories.map(c => c.color),
-                        borderColor: '#000000',
-                        borderWidth: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: "68%",
-                    plugins: {
-                        legend: { 
-                            position: 'bottom', 
-                            labels: { 
-                                color: '#ddd', 
-                                padding: 20, 
-                                font: { size: 14 } 
-                            } 
-                        }
-                    }
-                }
-            });
-        };
-    </script>
-</body>
-</html>
+                <div class="category-card bg-zinc-950 border border
