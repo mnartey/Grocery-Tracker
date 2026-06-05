@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+</head>
+<body>
+    <header>
+        <h1>🛒 Grocery Tracker</h1>
+        <div id="summary">Monthly Total: $0.00 | Budget: $400</div>
+    </header>
+
+    <main>
+        <section id="add-entry">
+            <h2>Add Purchase</h2>
+            <input type="text" id="item" placeholder="Item (e.g. Chicken Breast)">
+            <input type="number" id="price" placeholder="Price" step="0.01">
+            <select id="category">
+                <option value="Produce">Produce</option>
+                <option value="Dairy">Dairy/Eggs</option>
+                <option value="Proteins">Proteins</option>
+                <option value="Pantry">Pantry Staples</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Household">Household</option>
+                <option value="Other">Other</option>
+            </select>
+            <button onclick="addEntry()">Add Entry</button>
+        </section>
+
+        <section id="entries">
+            <h2>Recent Entries</h2>
+            <ul id="entry-list"></ul>
+        </section>
+
+        <section id="stats">
+            <h2>Monthly Stats</h2>
+            <canvas id="chart" width="300" height="200"></canvas>
+            <button onclick="clearData()">Clear All Data (Reset)</button>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
