@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 Mike's Grocery Tracker - June 2026</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+            background-color: #18181b;
+            color: #f4f4f5;
+        }
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .receipt-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .receipt-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .scroll-container {
+            max-height: 420px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #4b5563 #27272a;
+        }
+        .category-card {
+            transition: all 0.2s ease;
+        }
+        .category-header {
+            cursor: pointer;
+        }
+        .expand-icon {
+            transition: transform 0.3s ease;
+        }
+        .expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+        .category-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        .expanded .category-details {
+            max-height: 800px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="max-w-6xl mx-auto p-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <h1 class="title-font text-5xl font-semibold tracking-tighter text-emerald-400">Grocery Tracker</h1>
+                <p class="text-zinc-400 mt-1">June 2026 • Lidl Garwood, NJ</p>
+            </div>
+            <div class="text-right">
+                <div class="text-6xl font-semibold text-white" id="total">$87.18</div>
+                <p class="text-emerald-400 text-sm font-medium">MONTHLY TOTAL</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Spending Breakdown -->
+            <div class="lg:col-span-7 bg-zinc-900 rounded-3xl p-8">
+                <h2 class="text-2xl font-semibold mb-8 flex items-center gap-3">
+                    📊 Spending Breakdown
+                </h2>
+                
+                <!-- Chart -->
+                <div class="chart-container mb-8" style="height: 320px;">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+
+                <!-- Category Cards -->
+                <div class="space-y-4" id="categories">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Recent Receipts -->
+            <div class="lg:col-span-5 bg-zinc-900 rounded-3xl p-8">
+                <h2 class="text-2xl font-semibold mb-6">Recent Receipts</h2>
+                <div class="scroll-container space-y-6">
+                    <div class="receipt-card bg-zinc-800/80 rounded-2xl p-6 border border-zinc-700">
+                        <div class="flex justify-between">
+                            <div>
+                                <div class="font-semibold text-lg">June 2, 2026</div>
+                                <div class="text-zinc-400 text-sm">17 items • $72.68</div>
+                            </div>
+                            <div class="text-emerald-400 text-3xl font-semibold">$72.68</div>
+                        </div>
+                        <div class="mt-4 text-sm text-zinc-400">Steak • Salmon • Rao's Sauce • Fajitas • ...</div>
+                    </div>
+
+                    <div class="receipt-card bg-zinc-800/80 rounded-2xl p-6 border border-zinc-700">
+                        <div class="flex justify-between">
+                            <div>
+                                <div class="font-semibold text-lg">June 3, 2026</div>
+                                <div class="text-zinc-400 text-sm">4 items • $14.50</div>
+                            </div>
+                            <div class="text-emerald-400 text-3xl font-semibold">$14.50</div>
+                        </div>
+                        <div class="mt-4 text-sm text-zinc-400">Chicken Thighs • Smoked Salmon • Mangos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center text-zinc-500 text-xs">
+            Save as <strong>grocery_tracker.html</strong> • Double-click to open • Send me new receipts and I'll update it!
+        </div>
+    </div>
+
+    <script>
+        const categories = [
+            {
+                name: "Meat & Seafood",
+                color: "#10b981",
+                amount: 40.44,
+                items: [
+                    { name: "Grassfed Strip Steak", qty: "2.0 @ $8.99", price: 17.98 },
+                    { name: "BAP Chilean Salmon", qty: "1.04 lb @ $9.49/lb", price: 9.87 },
+                    { name: "Chicken Thighs", qty: "4.26 lb @ $1.55/lb", price: 6.60 },
+                    { name: "Smoked Salmon", qty: "", price: 5.99 }
+                ]
+            },
+            {
+                name: "Produce",
+                color: "#eab308",
+                amount: 18.08,
+                items: [
+                    { name: "Bananas", qty: "2.64 lb @ $0.49/lb", price: 1.29 },
+                    { name: "Baby Spring Mix", qty: "", price: 2.99 },
+                    { name: "Vine Tomatoes", qty: "1.15 lb @ $1.99/lb", price: 2.29 },
+                    { name: "Yuca Roots", qty: "1.43 lb @ $1.99/lb", price: 2.85 },
+                    { name: "Cucumbers", qty: "", price: 0.79 },
+                    { name: "Lemons", qty: "2 @ $0.69", price: 1.38 },
+                    { name: "Avocados", qty: "2 @ $0.65", price: 1.30 },
+                    { name: "Mangos Ataulfo", qty: "3 @ $0.79", price: 2.37 }
+                ]
+            },
+            {
+                name: "Pantry & Sauces",
+                color: "#3b82f6",
+                amount: 14.84,
+                items: [
+                    { name: "Rao's Sauce", qty: "", price: 6.98 },
+                    { name: "Diced Tomatoes", qty: "2 @ $0.96 (x2)", price: 3.84 },
+                    { name: "Mexican Pollo Sauce", qty: "", price: 2.23 },
+                    { name: "Black Olives", qty: "", price: 1.79 }
+                ]
+            },
+            {
+                name: "Dairy & Snacks",
+                color: "#a855f7",
+                amount: 13.82,
+                items: [
+                    { name: "Brown Eggs", qty: "18 count", price: 4.25 },
+                    { name: "Cinnam. Cookies", qty: "", price: 2.49 },
+                    { name: "Plain Fajitas", qty: "", price: 9.99 },
+                    { name: "Plantain Chips", qty: "", price: 2.29 }
+                ]
+            }
+        ];
+
+        function renderCategories() {
+            const container = document.getElementById('categories');
+            container.innerHTML = '';
+
+            categories.forEach((cat, index) => {
+                const card = document.createElement('div');
+                card.className = `category-card bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700`;
+                card.innerHTML = `
+                    <div class="category-header p-6 flex items-center justify-between" data-index="${index}">
+                        <div class="flex items-center gap-4">
+                            <div class="w-4 h-4 rounded-full" style="background-color: ${cat.color}"></div>
+                            <div>
+                                <div class="font-semibold text-lg">${cat.name}</div>
+                                <div class="text-zinc-400 text-sm">${cat.items.length} items • $${cat.amount.toFixed(2)}</div>
+                            </div>
+                        </div>
+                        <div class="expand-icon text-zinc-400 text-2xl">▼</div>
+                    </div>
+                    <div class="category-details px-6 pb-6">
+                        <div class="pt-4 border-t border-zinc-700">
+                            ${cat.items.map(item => `
+                                <div class="flex justify-between py-3 border-b border-zinc-700 last:border-0">
+                                    <div>
+                                        <div class="font-medium">${item.name}</div>
+                                        ${item.qty ? `<div class="text-xs text-zinc-500">${item.qty}</div>` : ''}
+                                    </div>
+                                    <div class="font-mono text-emerald-400">$${item.price.toFixed(2)}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
