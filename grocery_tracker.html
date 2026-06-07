@@ -17,10 +17,10 @@
         .item-list {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s ease;
         }
         .category-card.open .item-list {
-            max-height: 500px;
+            max-height: 1200px; /* Much taller to prevent cutoff */
         }
         .toggle-icon {
             transition: transform 0.3s ease;
@@ -97,7 +97,7 @@
                         </div>
                     </div>
 
-                    <!-- Produce (updated with new items) -->
+                    <!-- Produce (now fully visible when expanded) -->
                     <div class="category-card bg-zinc-800 rounded-2xl p-4 cursor-pointer" onclick="toggleCategory(this)">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
@@ -113,7 +113,6 @@
                             </div>
                         </div>
                         <div class="item-list mt-4 space-y-3 text-sm border-t border-zinc-700 pt-4">
-                            <!-- Previous Produce + new ones -->
                             <div class="flex justify-between items-center">
                                 <div>Bananas<br><span class="text-xs text-zinc-500">2.64 lb @ $0.49/lb</span></div>
                                 <div class="text-emerald-400 font-medium">$1.29</div>
@@ -146,7 +145,6 @@
                                 <div>Mangos Ataulfo<br><span class="text-xs text-zinc-500">3 @ $0.79</span></div>
                                 <div class="text-emerald-400 font-medium">$2.37</div>
                             </div>
-                            <!-- New items from third receipt -->
                             <div class="flex justify-between items-center">
                                 <div>Baby Spring Mix</div>
                                 <div class="text-emerald-400 font-medium">$2.99</div>
@@ -166,7 +164,7 @@
                         </div>
                     </div>
 
-                    <!-- Pantry & Sauces (updated) -->
+                    <!-- Pantry & Sauces -->
                     <div class="category-card bg-zinc-800 rounded-2xl p-4 cursor-pointer" onclick="toggleCategory(this)">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
@@ -199,7 +197,7 @@
                                 <div class="text-emerald-400 font-medium">$1.79</div>
                             </div>
                             <div class="flex justify-between items-center">
-                                <div>Diced Tomatoes (new)</div>
+                                <div>Diced Tomatoes</div>
                                 <div class="text-emerald-400 font-medium">$1.92</div>
                             </div>
                         </div>
@@ -275,7 +273,7 @@
                         <div class="flex justify-between items-start">
                             <div>
                                 <div class="text-emerald-400 font-bold text-2xl">$31.47</div>
-                                <div class="text-zinc-400 text-sm">June 3, 2026 • ~8 items</div>
+                                <div class="text-zinc-400 text-sm">June 3, 2026 • 8 items</div>
                             </div>
                             <div class="text-right text-xs text-zinc-500">Store</div>
                         </div>
@@ -315,7 +313,7 @@
             card.classList.toggle('open');
         }
 
-        // Chart (updated values)
+        // Chart
         const ctx = document.getElementById('spendingChart');
         new Chart(ctx, {
             type: 'doughnut',
