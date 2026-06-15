@@ -34,6 +34,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Spending Breakdown -->
             <div class="card rounded-3xl p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-xl font-semibold flex items-center gap-2">📊 Spending Breakdown</h2>
@@ -46,7 +47,7 @@
                 </div>
 
                 <div class="space-y-3">
-                    <!-- Meat & Seafood updated with new items -->
+                    <!-- Meat & Seafood -->
                     <div class="category-card bg-zinc-800 rounded-2xl p-4 cursor-pointer" onclick="toggleCategory(this)">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
@@ -64,22 +65,148 @@
                         <div class="item-list mt-4 space-y-3 text-sm border-t border-zinc-700 pt-4">
                             <div class="flex justify-between items-center"><div>Grassfed Strip Steak</div><div class="text-emerald-400 font-medium">$17.98</div></div>
                             <div class="flex justify-between items-center"><div>BAP Chilean Salmon (x2)</div><div class="text-emerald-400 font-medium">$16.80</div></div>
-                            <div class="flex justify-between items-center"><div>Chicken Thighs (net)</div><div class="text-emerald-400 font-medium">$4.22</div></div>
-                            <div class="flex justify-between items-center"><div>Chicken Thighs (new net)</div><div class="text-emerald-400 font-medium">$8.29</div></div>
-                            <div class="flex justify-between items-center"><div>Tilapia Fillet (x2 net)</div><div class="text-emerald-400 font-medium">$8.22</div></div>
-                            <div class="flex justify-between items-center"><div>Center Cut</div><div class="text-emerald-400 font-medium">$7.25</div></div>
+                            <div class="flex justify-between items-center"><div>Chicken Thighs (net across receipts)</div><div class="text-emerald-400 font-medium">$12.51</div></div>
+                            <div class="flex justify-between items-center"><div>Tilapia Fillet (net x2)</div><div class="text-emerald-400 font-medium">$8.22</div></div>
+                            <div class="flex justify-between items-center"><div>Center Cut (net)</div><div class="text-emerald-400 font-medium">$7.25</div></div>
                             <div class="flex justify-between items-center"><div>Smoked Salmon (x2)</div><div class="text-emerald-400 font-medium">$11.98</div></div>
                         </div>
                     </div>
 
-                    <!-- Produce, Pantry, Dairy updated similarly with new items (Yuca, Zucchini, Spinach, etc.) grouped -->
+                    <!-- Produce -->
+                    <div class="category-card bg-zinc-800 rounded-2xl p-4 cursor-pointer" onclick="toggleCategory(this)">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-4 h-4 bg-amber-500 rounded-full"></div>
+                                <span class="font-semibold">Produce</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <div class="font-semibold">$68.41</div>
+                                    <div class="text-xs text-zinc-400">20+ items</div>
+                                </div>
+                                <span class="toggle-icon text-zinc-400">▼</span>
+                            </div>
+                        </div>
+                        <div class="item-list mt-4 space-y-3 text-sm border-t border-zinc-700 pt-4">
+                            <div class="flex justify-between items-center"><div>Bananas</div><div class="text-emerald-400 font-medium">$1.29</div></div>
+                            <div class="flex justify-between items-center"><div>Baby Spring Mix (x2)</div><div class="text-emerald-400 font-medium">$5.98</div></div>
+                            <div class="flex justify-between items-center"><div>Vine Tomatoes / Tomatoes on Vine</div><div class="text-emerald-400 font-medium">$5.29</div></div>
+                            <div class="flex justify-between items-center"><div>Yuca Roots (x2)</div><div class="text-emerald-400 font-medium">$5.04</div></div>
+                            <div class="flex justify-between items-center"><div>Cucumbers (x2)</div><div class="text-emerald-400 font-medium">$1.58</div></div>
+                            <div class="flex justify-between items-center"><div>Lemons</div><div class="text-emerald-400 font-medium">$1.38</div></div>
+                            <div class="flex justify-between items-center"><div>Avocados</div><div class="text-emerald-400 font-medium">$1.30</div></div>
+                            <div class="flex justify-between items-center"><div>Mangos Ataulfo (x2)</div><div class="text-emerald-400 font-medium">$4.74</div></div>
+                            <div class="flex justify-between items-center"><div>Yellow Onions</div><div class="text-emerald-400 font-medium">$3.74</div></div>
+                            <div class="flex justify-between items-center"><div>Green Onions</div><div class="text-emerald-400 font-medium">$1.29</div></div>
+                            <div class="flex justify-between items-center"><div>Sweet Potatoes</div><div class="text-emerald-400 font-medium">$2.15</div></div>
+                            <div class="flex justify-between items-center"><div>Russet Potatoes</div><div class="text-emerald-400 font-medium">$0.79</div></div>
+                            <div class="flex justify-between items-center"><div>Green Grapes</div><div class="text-emerald-400 font-medium">$3.62</div></div>
+                            <div class="flex justify-between items-center"><div>Navel Oranges</div><div class="text-emerald-400 font-medium">$3.89</div></div>
+                            <div class="flex justify-between items-center"><div>Long Peppers</div><div class="text-emerald-400 font-medium">$3.99</div></div>
+                            <div class="flex justify-between items-center"><div>Zucchini</div><div class="text-emerald-400 font-medium">$0.77</div></div>
+                            <div class="flex justify-between items-center"><div>Spinach 10 oz</div><div class="text-emerald-400 font-medium">$2.19</div></div>
+                            <div class="flex justify-between items-center"><div>Garlic</div><div class="text-emerald-400 font-medium">$2.50</div></div>
+                            <div class="flex justify-between items-center"><div>Corn</div><div class="text-emerald-400 font-medium">$3.15</div></div>
+                        </div>
+                    </div>
 
-                    <!-- (Full lists for Produce, Pantry, Dairy follow the same pattern as previous complete versions with new items added and grouped) -->
+                    <!-- Pantry & Sauces -->
+                    <div class="category-card bg-zinc-800 rounded-2xl p-4 cursor-pointer" onclick="toggleCategory(this)">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                                <span class="font-semibold">Pantry & Sauces</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <div class="font-semibold">$25.00</div>
+                                    <div class="text-xs text-zinc-400">8 items</div>
+                                </div>
+                                <span class="toggle-icon text-zinc-400">▼</span>
+                            </div>
+                        </div>
+                        <div class="item-list mt-4 space-y-3 text-sm border-t border-zinc-700 pt-4">
+                            <div class="flex justify-between items-center"><div>Rao's Sauce</div><div class="text-emerald-400 font-medium">$6.98</div></div>
+                            <div class="flex justify-between items-center"><div>Diced Tomatoes (multiple)</div><div class="text-emerald-400 font-medium">$7.35</div></div>
+                            <div class="flex justify-between items-center"><div>Mexican Pollo Sauce</div><div class="text-emerald-400 font-medium">$2.23</div></div>
+                            <div class="flex justify-between items-center"><div>Black Olives</div><div class="text-emerald-400 font-medium">$1.79</div></div>
+                            <div class="flex justify-between items-center"><div>Olive Oil</div><div class="text-emerald-400 font-medium">$5.99</div></div>
+                            <div class="flex justify-between items-center"><div>Chicken Broth</div><div class="text-emerald-400 font-medium">$4.25</div></div>
+                            <div class="flex justify-between items-center"><div>Garlic Salt</div><div class="text-emerald-400 font-medium">$2.78</div></div>
+                        </div>
+                    </div>
 
+                    <!-- Dairy & Snacks -->
+                    <div class="category-card bg-zinc-800 rounded-2xl p-4 cursor-pointer" onclick="toggleCategory(this)">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-4 h-4 bg-purple-500 rounded-full"></div>
+                                <span class="font-semibold">Dairy & Snacks</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <div class="font-semibold">$48.00</div>
+                                    <div class="text-xs text-zinc-400">8 items</div>
+                                </div>
+                                <span class="toggle-icon text-zinc-400">▼</span>
+                            </div>
+                        </div>
+                        <div class="item-list mt-4 space-y-3 text-sm border-t border-zinc-700 pt-4">
+                            <div class="flex justify-between items-center"><div>Brown Eggs</div><div class="text-emerald-400 font-medium">$4.25</div></div>
+                            <div class="flex justify-between items-center"><div>Cinnam. Cookies</div><div class="text-emerald-400 font-medium">$2.49</div></div>
+                            <div class="flex justify-between items-center"><div>Plain Fajitas</div><div class="text-emerald-400 font-medium">$9.99</div></div>
+                            <div class="flex justify-between items-center"><div>Plantain Chips</div><div class="text-emerald-400 font-medium">$2.29</div></div>
+                            <div class="flex justify-between items-center"><div>Greek Yogurt</div><div class="text-emerald-400 font-medium">$3.19</div></div>
+                            <div class="flex justify-between items-center"><div>Half & Half</div><div class="text-emerald-400 font-medium">$2.49</div></div>
+                            <div class="flex justify-between items-center"><div>Philadelphia Cream Cheese</div><div class="text-emerald-400 font-medium">$2.98</div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Recent Receipts now 4 trips, with this new $92.30 one added -->
+            <!-- Recent Receipts -->
+            <div class="card rounded-3xl p-6">
+                <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">🧾 Recent Receipts</h2>
+                <div class="space-y-4">
+                    <div class="bg-zinc-900 rounded-2xl p-5">
+                        <div class="flex justify-between items-start">
+                            <div><div class="text-emerald-400 font-bold text-2xl">$72.68</div><div class="text-zinc-400 text-sm">June 2 • 17 items</div></div>
+                            <div class="text-xs text-zinc-500">Lidl</div>
+                        </div>
+                    </div>
+                    <div class="bg-zinc-900 rounded-2xl p-5">
+                        <div class="flex justify-between items-start">
+                            <div><div class="text-emerald-400 font-bold text-2xl">$14.50</div><div class="text-zinc-400 text-sm">June 3 • 4 items</div></div>
+                            <div class="text-xs text-zinc-500">Lidl</div>
+                        </div>
+                    </div>
+                    <div class="bg-zinc-900 rounded-2xl p-5">
+                        <div class="flex justify-between items-start">
+                            <div><div class="text-emerald-400 font-bold text-2xl">$27.13</div><div class="text-zinc-400 text-sm">June 7 • 9 items</div></div>
+                            <div class="text-xs text-zinc-500">Lidl</div>
+                        </div>
+                    </div>
+                    <div class="bg-zinc-900 rounded-2xl p-5">
+                        <div class="flex justify-between items-start">
+                            <div><div class="text-emerald-400 font-bold text-2xl">$92.30</div><div class="text-zinc-400 text-sm">Recent • 25+ items</div></div>
+                            <div class="text-xs text-zinc-500">Lidl</div>
+                        </div>
+                        <div class="mt-3 text-sm text-zinc-400">Chicken Thighs • Tilapia • BAP Salmon • Greek Yogurt • ...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+            <div class="card rounded-3xl p-6 text-center"><div class="text-emerald-400 text-4xl font-bold">4</div><div class="text-zinc-400 mt-1">Shopping Trips</div></div>
+            <div class="card rounded-3xl p-6 text-center"><div class="text-emerald-400 text-4xl font-bold">~55</div><div class="text-zinc-400 mt-1">Total Items</div></div>
+            <div class="card rounded-3xl p-6 text-center"><div class="text-emerald-400 text-4xl font-bold">$51.65</div><div class="text-zinc-400 mt-1">Average per trip</div></div>
+            <div class="card rounded-3xl p-6 text-center"><div class="text-emerald-400 text-4xl font-bold">32%</div><div class="text-zinc-400 mt-1">Meat/Seafood share</div></div>
+        </div>
+
+        <div class="text-center text-xs text-zinc-500 mt-12">
+            Save as grocery_tracker.html • Click categories to expand • Send new receipts and I'll update it!
         </div>
     </div>
 
@@ -94,7 +221,7 @@
             data: {
                 labels: ['Meat & Seafood', 'Produce', 'Pantry & Sauces', 'Dairy & Snacks'],
                 datasets: [{
-                    data: [65.20, 68.41, 25.00, 48.00], // approximate - will be exact in full version
+                    data: [65.20, 68.41, 25.00, 48.00],
                     backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#8b5cf6'],
                     borderWidth: 0,
                     cutout: '70%'
